@@ -15,16 +15,26 @@ gulp.task('js', function () {
     .pipe(gulp.dest('.tmp/'));
 });
 
+gulp.task('copy', function() {
+  return gulp.src(['bower.json'])
+    .pipe(gulp.dest('.tmp/'));  
+});
+
+gulp.task('link', function() {
+  return gulp.src(['bower_components'])
+    .pipe($.sym('.tmp/bower_components'));  
+});
+
 // Clean output directory
 gulp.task('clean', function () {
   return del(['.tmp', 'dist']);
 });
 
 gulp.task('watch', function() {
-  runSequence('clean', 'js', function(){
+  runSequence('clean', 'copy', 'link', 'js', function(){
     gulp.watch(['*.html', 'demo/*.html'], ['js']);
   });
 });
 
-gulp.task('default', ['clean', 'js'], function() {
+gulp.task('default', ['clean', 'copy', 'link', 'js'], function() {
 });
