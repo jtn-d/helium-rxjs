@@ -1,0 +1,65 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<link rel="import" href="helium-rxjs-from-event.html">
+<link rel="import" href="helium-rxjs-debounce.html">
+<link rel="import" href="helium-rxjs-distinct-until-changed.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-observable></helium-rxjs-observable>
+
+Example:
+
+    <helium-rxjs-observable>
+    </helium-rxjs-observable>
+-->
+
+<dom-module id="helium-rxjs-observable">
+  <template>
+    <content id="operators" select="helium-rxjs-from-event,helium-rxjs-debounce,helium-rxjs-distinct-until-changed"></content>
+  </template>
+
+  <script>
+  (function() {
+    'use strict';
+
+    class HeliumRxJSObservable {
+      beforeRegister() {
+        this.is = 'helium-rxjs-observable';
+
+        this.properties = {
+          observable: {
+            type: Object,
+            value: null,
+            notify: true
+          }
+        };
+      }
+      
+      attached() {
+        this.async(() => {
+          this.getContentChildren('#operators').forEach((op) => {
+            this.observable = op._create(this.observable);
+          });
+
+          this.observable.subscribe(
+            data => {
+              this.fire('next', {data});
+            }, 
+            error => {
+              this.fire('error', {error});
+            }, 
+            () => {
+              this.fire('completed', {});            
+            }
+          );
+        });
+      }
+    }
+    Polymer(HeliumRxJSObservable);
+  })();
+  </script>
+</dom-module>

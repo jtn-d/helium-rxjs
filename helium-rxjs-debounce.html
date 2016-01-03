@@ -1,0 +1,48 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-debounce></helium-rxjs-debounce>
+
+Example:
+
+    <helium-rxjs-debounce>
+    </helium-rxjs-debounce>
+-->
+
+<dom-module id="helium-rxjs-debounce">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class Debounce {
+      beforeRegister() {
+        this.is = 'helium-rxjs-debounce';
+
+        this.properties = {
+          dueTime: {
+            type: Number,
+            value: 0,
+            notify: true,
+            observer: 'dueTimeChanged'
+          }
+        };
+      }
+      
+      dueTimeChanged(e) {
+        // https://github.com/Polymer/polymer/issues/2815
+        this.fire('due-time-changed', e);
+      }
+      
+      _create(observable) {
+        return observable.debounce(this.dueTime);
+      }
+    }
+    Polymer(Debounce);
+  })();
+  </script>
+</dom-module>

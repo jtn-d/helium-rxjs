@@ -9,29 +9,35 @@
   </head>
   <body unresolved>
 
-    <p>An example of <code>&lt;helium-rxjs&gt;</code>:</p>
+    <template is="dom-bind" id="app" >
+      <p>An example of <code>&lt;helium-rxjs-observable&gt;</code>:</p>
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
-
-    <helium-rxjs author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
-      <h2>Hello</h2>
-    </helium-rxjs>
-
+      <helium-rxjs-observable
+        on-next="onNext"
+        on-error="onError" 
+        on-completed="onCompleted">
+        <helium-rxjs-from-event event-name="keyup">
+          <input type="text" placeholder="search" autofocus/>
+        </helium-rxjs-from-event>
+        <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
+        <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
+      </helium-rxjs-observable>
+    </template>
+        
     <script>
-      var seedElement = document.querySelector('helium-rxjs');
+      var app = document.querySelector('#app');
 
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
-
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
-
-      document.addEventListener("helium-rxjs-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
+      app.onNext = (e) => {
+        console.log(e.detail.data);
+      }
+      
+      app.onError = (e) => {
+        console.log('onError: ' + e.detail);
+      }
+      
+      app.onCompleted = () => {
+        console.log('onCompleted');
+      }
     </script>
 
   </body>

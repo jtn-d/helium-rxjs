@@ -1,0 +1,61 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-from-event></helium-rxjs-from-event>
+
+Example:
+
+    <helium-rxjs-from-event>
+    </helium-rxjs-from-event>
+-->
+
+<dom-module id="helium-rxjs-from-event">
+  <template>
+    <content></content>
+  </template>
+  
+  <script>
+  (function() {
+    'use strict';
+
+    class HeliumRxJSFromEvent {
+      beforeRegister() {
+        this.is = 'helium-rxjs-from-event';
+
+        this.properties = {
+          element: {
+            type: Object,
+            value: null,
+            notify: true
+          },
+          eventName: {
+            type: String,
+            value: null,
+            notify: true
+          }
+        };
+      }
+      
+      attached() {
+        let elements = this.getContentChildren('content');
+        if (elements.length === 1) {
+          // take first elements
+          this.element = elements[0];          
+        } else {
+          console.warn('helium-rxjs-from-event can have only one child');
+        }
+      }
+      
+      _create(observable) {
+        observable = Rx.Observable.fromEvent(this.element, this.eventName);
+        return observable.map(e => e.target.value);
+      }
+    }
+    Polymer(HeliumRxJSFromEvent);
+  })();
+  </script>
+</dom-module>
