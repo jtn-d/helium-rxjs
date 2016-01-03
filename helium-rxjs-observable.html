@@ -19,7 +19,9 @@ Example:
 
 <dom-module id="helium-rxjs-observable">
   <template>
-    <content id="operators" select="helium-rxjs-from-event,helium-rxjs-debounce,helium-rxjs-distinct-until-changed,helium-rxjs-map"></content>
+    <content id="operators" select="helium-rxjs-from-event,helium-rxjs-debounce,
+      helium-rxjs-distinct-until-changed,helium-rxjs-map,helium-rxjs-filter">
+    </content>
   </template>
 
   <script>
@@ -35,6 +37,13 @@ Example:
             type: Object,
             value: null,
             notify: true
+          },
+          
+          subcription: {
+            type: Object,
+            value: null,
+            readonly: true,
+            notify: true
           }
         };
       }
@@ -45,7 +54,7 @@ Example:
             this.observable = op._create(this.observable);
           });
 
-          this.observable.subscribe(
+          this.subcription = this.observable.subscribe(
             data => {
               this.fire('next', {data});
             }, 

@@ -10,7 +10,8 @@ Element wrapper for [RxJS](https://github.com/Reactive-Extensions/RxJS)
   <helium-rxjs-from-event event-name="keyup">
     <input type="text" placeholder="search" autofocus/>
   </helium-rxjs-from-event>
-  <helium-rxjs-map selector="e => e.target.value"></helium-rxjs-map>
+  <helium-rxjs-map selector="(function(e) {return e.target.value;})"></helium-rxjs-map>
+  <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
   <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
   <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
 </helium-rxjs-observable>

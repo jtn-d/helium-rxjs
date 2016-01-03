@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-filter></helium-rxjs-filter>
+
+Example:
+
+    <helium-rxjs-filter>
+    </helium-rxjs-filter>
+-->
+
+<dom-module id="helium-rxjs-filter">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class Map {
+      beforeRegister() {
+        this.is = 'helium-rxjs-filter';
+
+        this.properties = {
+          predicate: {
+            type: String,
+            value: 'element => element !== null'
+          }
+        };
+      }
+      
+      _create(observable) {
+        return observable.filter(eval(this.predicate));
+      }
+    }
+    Polymer(Map);
+  })();
+  </script>
+</dom-module>
