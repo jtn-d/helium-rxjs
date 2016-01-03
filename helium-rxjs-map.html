@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-map></helium-rxjs-map>
+
+Example:
+
+    <helium-rxjs-map>
+    </helium-rxjs-map>
+-->
+
+<dom-module id="helium-rxjs-map">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class Map {
+      beforeRegister() {
+        this.is = 'helium-rxjs-map';
+
+        this.properties = {
+          selector: {
+            type: String,
+            value: 'element => element'
+          }
+        };
+      }
+      
+      _create(observable) {
+        return observable.map(eval(this.selector));
+      }
+    }
+    Polymer(Map);
+  })();
+  </script>
+</dom-module>

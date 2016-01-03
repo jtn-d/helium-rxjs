@@ -51,8 +51,8 @@ Example:
       }
       
       _create(observable) {
-        observable = Rx.Observable.fromEvent(this.element, this.eventName);
-        return observable.map(e => e.target.value);
+        return Rx.Observable.fromEvent(this.element, this.eventName);
+        //return observable.map(e => e.target.value);
       }
     }
     Polymer(HeliumRxJSFromEvent);
