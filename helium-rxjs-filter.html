@@ -25,14 +25,18 @@ Example:
 
         this.properties = {
           predicate: {
-            type: String,
-            value: 'element => element !== null'
+            type: Object,
+            value: null
           }
         };
       }
       
       _create(observable) {
-        return observable.filter(eval(this.predicate));
+        if (typeof this.selector === 'function') {
+          return observable.filter(this.predicate);          
+        } else {
+          return observable.filter(eval(this.predicate));       
+        }
       }
     }
     Polymer(Map);

@@ -4,6 +4,7 @@ Element wrapper for [RxJS](https://github.com/Reactive-Extensions/RxJS)
 
 ```html
 <helium-rxjs-observable
+  subscription="{{subscription}}"
   on-next="onNext"
   on-error="onError" 
   on-completed="onCompleted">
@@ -14,6 +15,8 @@ Element wrapper for [RxJS](https://github.com/Reactive-Extensions/RxJS)
   <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
   <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
   <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
+  <helium-rxjs-flat-map-latest selector="{{search}}"></helium-rxjs-flat-map-latest>
+  <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
 </helium-rxjs-observable>
 ```
 

@@ -5,23 +5,23 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <helium-rxjs-map></helium-rxjs-map>
+    <helium-rxjs-flat-map-latest></helium-rxjs-flat-map-latest>
 
 Example:
 
-    <helium-rxjs-map>
-    </helium-rxjs-map>
+    <helium-rxjs-flat-map-latest>
+    </helium-rxjs-flat-map-latest>
 -->
 
-<dom-module id="helium-rxjs-map">
+<dom-module id="helium-rxjs-flat-map-latest">
 
   <script>
   (function() {
     'use strict';
 
-    class Map {
+    class FlatMapLatest {
       beforeRegister() {
-        this.is = 'helium-rxjs-map';
+        this.is = 'helium-rxjs-flat-map-latest';
 
         this.properties = {
           selector: {
@@ -33,13 +33,13 @@ Example:
       
       _create(observable) {
         if (typeof this.selector === 'function') {
-          return observable.map(this.selector);          
+          return observable.flatMapLatest(this.selector);          
         } else {
-          return observable.map(eval(this.selector));        
-        }        
+         return observable.flatMapLatest(eval(this.selector));          
+        }
       }
     }
-    Polymer(Map);
+    Polymer(FlatMapLatest);
   })();
   </script>
 </dom-module>

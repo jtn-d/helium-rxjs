@@ -24,6 +24,8 @@
         <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
         <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
         <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
+        <helium-rxjs-flat-map-latest selector="{{search}}"></helium-rxjs-flat-map-latest>
+        <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
       </helium-rxjs-observable>
     </template>
         
@@ -32,15 +34,20 @@
 
       app.onNext = (e) => {
         console.log(e.detail.data);
-        app.subscription.dispose();
+        //app.subscription.dispose();
       }
       
       app.onError = (e) => {
-        console.log('onError: ' + e.detail);
+        console.log(e.detail);
       }
       
       app.onCompleted = () => {
         console.log('onCompleted');
+      }
+      
+      app.search = (query) => {
+        let url = `http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${query}&callback=JSONPCallback`;
+        return Rx.DOM.jsonpRequest(url);
       }
     </script>
 
