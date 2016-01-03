@@ -14,7 +14,10 @@ Example:
 -->
 
 <dom-module id="helium-rxjs-flat-map-latest">
-
+  <template>
+    <content select="helium-rxjs-dom-ajax,helium-rxjs-dom-jsonp-request"></content>
+  </template>
+  
   <script>
   (function() {
     'use strict';
@@ -32,11 +35,21 @@ Example:
       }
       
       _create(observable) {
-        if (typeof this.selector === 'function') {
-          return observable.flatMapLatest(this.selector);          
+        let children = this.getContentChildren('content');
+        if (children.length === 1) {
+          // take first child
+          this.selector = children[0]._selector.bind(children[0]);
+          return observable.flatMapLatest(this.selector);
+        } else if (children.length > 1) {
+          console.warn('helium-rxjs-flat-map-latest can have only one child');
         } else {
-         return observable.flatMapLatest(eval(this.selector));          
-        }
+          // no children
+          if (typeof this.selector === 'function') {
+            return observable.flatMapLatest(this.selector);          
+          } else {
+          return observable.flatMapLatest(eval(this.selector));          
+          } 
+        }        
       }
     }
     Polymer(FlatMapLatest);

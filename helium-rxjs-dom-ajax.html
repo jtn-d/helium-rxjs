@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-dom-ajax></helium-rxjs-dom-ajax>
+
+Example:
+
+    <helium-rxjs-dom-ajax>
+    </helium-rxjs-dom-ajax>
+-->
+
+<dom-module id="helium-rxjs-dom-ajax">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class DomAjax {
+      beforeRegister() {
+        this.is = 'helium-rxjs-dom-ajax';
+
+        this.properties = {
+          url: {
+            type: String,
+            value: null
+          },
+          responseType: {
+            type: String,
+            value: 'json'
+          }
+        };
+      }
+      
+      _create(observable) {
+        return Rx.DOM.ajax({url: this.url, responseType: this.responseType});
+      }
+      
+      _selector(value) {
+        let url = eval('`' + decodeURIComponent(this.url) + '`');
+        return Rx.DOM.ajax({url, responseType: this.responseType});
+      }
+    }
+    Polymer(DomAjax);
+  })();
+  </script>
+</dom-module>

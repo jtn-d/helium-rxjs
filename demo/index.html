@@ -24,7 +24,11 @@
         <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
         <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
         <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
-        <helium-rxjs-flat-map-latest selector="{{search}}"></helium-rxjs-flat-map-latest>
+        <helium-rxjs-flat-map-latest selector="{{search}}">
+          <helium-rxjs-dom-jsonp-request 
+            url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${value}&callback=JSONPCallback">
+          </helium-rxjs-dom-jsonp-request>
+        </helium-rxjs-flat-map-latest>
         <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
       </helium-rxjs-observable>
     </template>
@@ -46,8 +50,8 @@
       }
       
       app.search = (query) => {
-        let url = `http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${query}&callback=JSONPCallback`;
-        return Rx.DOM.jsonpRequest(url);
+        let url = `https://api.github.com/users/octocat/repos`;
+        return Rx.DOM.ajax({url, responseType: 'json'});
       }
     </script>
 
