@@ -39,7 +39,7 @@ Example:
             notify: true
           },
           
-          subcription: {
+          subscription: {
             type: Object,
             value: null,
             readonly: true,
@@ -54,7 +54,7 @@ Example:
             this.observable = op._create(this.observable);
           });
 
-          this.subcription = this.observable.subscribe(
+          this.subscription = this.observable.subscribe(
             data => {
               this.fire('next', {data});
             }, 
