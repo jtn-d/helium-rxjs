@@ -14,6 +14,7 @@
 
       <helium-rxjs-observable
         subscription="{{subscription}}"
+        last-data="{{results}}"
         on-next="onNext"
         on-error="onError" 
         on-completed="onCompleted">
@@ -31,11 +32,17 @@
         </helium-rxjs-flat-map-latest>
         <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
       </helium-rxjs-observable>
+      </br>
+      </br>
+      <template is="dom-repeat" items="{{results}}" as="result">
+        <div>{{result}}}</div>
+        </br>
+      </template>
     </template>
         
     <script>
       var app = document.querySelector('#app');
-
+      
       app.onNext = (e) => {
         console.log(e.detail.data);
         //app.subscription.dispose();

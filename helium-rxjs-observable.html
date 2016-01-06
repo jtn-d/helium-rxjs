@@ -46,6 +46,20 @@ Example:
             value: null,
             readonly: true,
             notify: true
+          },
+          
+          lastData: {
+            type: Object,
+            value: null,
+            readonly: true,
+            notify: true
+          },
+          
+          lastError: {
+            type: Object,
+            value: null,
+            readonly: true,
+            notify: true
           }
         };
       }
@@ -58,9 +72,11 @@ Example:
 
           this.subscription = this.observable.subscribe(
             data => {
+              this.lastData = data;
               this.fire('next', {data});
             }, 
             error => {
+              this.lastError = error;
               this.fire('error', {error});
             }, 
             () => {

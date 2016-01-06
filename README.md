@@ -3,25 +3,26 @@
 Element wrapper for [RxJS](https://github.com/Reactive-Extensions/RxJS)
 
 ```html
-  <helium-rxjs-observable
-    subscription="{{subscription}}"
-    on-next="onNext"
-    on-error="onError"
-    on-completed="onCompleted">
-    <helium-rxjs-from-event event-name="keyup">
-      <input type="text" placeholder="search" autofocus/>
-    </helium-rxjs-from-event>
-    <helium-rxjs-map selector="(function(e) {return e.target.value;})"></helium-rxjs-map>
-    <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
-    <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
-    <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
-    <helium-rxjs-flat-map-latest selector="{{search}}">
-      <helium-rxjs-dom-jsonp-request 
-        url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${value}&callback=JSONPCallback">
-      </helium-rxjs-dom-jsonp-request>
-    </helium-rxjs-flat-map-latest>
-    <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
-  </helium-rxjs-observable>
+<helium-rxjs-observable
+  subscription="{{subscription}}"
+  last-data="{{results}}"
+  on-next="onNext"
+  on-error="onError"
+  on-completed="onCompleted">
+  <helium-rxjs-from-event event-name="keyup">
+    <input type="text" placeholder="search" autofocus/>
+  </helium-rxjs-from-event>
+  <helium-rxjs-map selector="(function(e) {return e.target.value;})"></helium-rxjs-map>
+  <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
+  <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
+  <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
+  <helium-rxjs-flat-map-latest selector="{{search}}">
+    <helium-rxjs-dom-jsonp-request 
+      url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${value}&callback=JSONPCallback">
+    </helium-rxjs-dom-jsonp-request>
+  </helium-rxjs-flat-map-latest>
+  <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
+</helium-rxjs-observable>
 ```
 
 ## Running Element
