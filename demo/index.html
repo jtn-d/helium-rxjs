@@ -12,7 +12,7 @@
     <template is="dom-bind" id="app" >
       <p>An example of <code>&lt;helium-rxjs-observable&gt;</code>:</p>
 
-      <helium-rxjs-observable auto
+    <helium-rxjs-observable auto
         subscription="{{subscription}}"
         last-data="{{results}}"
         on-next="onNext"
@@ -32,20 +32,47 @@
         </helium-rxjs-flat-map-latest>
         <helium-rxjs-map selector="(data) => { return {words: data.response[1], descriptions: data.response[2], urls: data.response[3]}; }"></helium-rxjs-map>
       </helium-rxjs-observable>
-      </br>
-      </br>
+      
+      <div>
+        <button onclick="app.$.obs.subscribe()">Subscribe</button>
+        <helium-rxjs-observable id="obs">
+          <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
+          <helium-rxjs-map selector="(x) => Rx.Observable.range(x,3)"></helium-rxjs-map>
+          <helium-rxjs-concat-all></helium-rxjs-concat-all>
+          <helium-rxjs-console-log></helium-rxjs-console-log>
+        </helium-rxjs-observable>
+      </div>
+            
+      <div>
+        <helium-rxjs-observable auto 
+          last-data="{{results}}">
+          <helium-rxjs-from-event event-name="click">
+            <button>Click</button>
+          </helium-rxjs-from-event>
+          <helium-rxjs-flat-map-latest>
+            <helium-rxjs-dom-jsonp-request 
+              url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=cat&callback=JSONPCallback">
+            </helium-rxjs-dom-jsonp-request>
+          </helium-rxjs-flat-map-latest>
+          <helium-rxjs-map selector="(data) => { return {descriptions: data.response[2]}; }"></helium-rxjs-map>
+          <helium-rxjs-console-log></helium-rxjs-console-log>
+        </helium-rxjs-observable>
+      </div>
+      
       <template is="dom-repeat" items="{{results.descriptions}}" as="result">
         <div>{{result}}</div>
         </br>
       </template>
       
-      <button onclick="app.$.obs.subscribe()">Subscribe</button>
-      <helium-rxjs-observable id="obs">
-        <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
-        <helium-rxjs-map selector="(x) => Rx.Observable.range(x,3)"></helium-rxjs-map>
-        <helium-rxjs-concat-all></helium-rxjs-concat-all>
-        <helium-rxjs-console-log></helium-rxjs-console-log>
-      </helium-rxjs-observable>
+      <div>
+        <helium-rxjs-observable auto>
+          <helium-rxjs-zip>
+            <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
+            <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
+          </helium-rxjs-zip>
+          <helium-rxjs-console-log></helium-rxjs-console-log>
+        </helium-rxjs-observable>
+      </div>
     </template>
         
     <script>

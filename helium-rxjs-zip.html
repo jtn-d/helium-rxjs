@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-zip></helium-rxjs-zip>
+
+Example:
+
+    <helium-rxjs-zip>
+    </helium-rxjs-zip>
+-->
+
+<dom-module id="helium-rxjs-zip">
+  <template>
+    <content select="helium-rxjs-dom-ajax,helium-rxjs-dom-jsonp-request,
+                     helium-rxjs-range">
+    </content>
+  </template>
+  
+  <script>
+  (function() {
+    'use strict';
+
+    class Zip {
+      beforeRegister() {
+        this.is = 'helium-rxjs-zip';
+
+        this.properties = {
+          selector: {
+            type: Object,
+            value: null
+          }
+        };
+      }
+      
+      _create(observable) {
+        let children = this.getContentChildren('content');
+        let obs = [];
+        children.forEach((child) => {
+          obs.push(child._create());
+        });
+
+        if (obs.length > 0) {
+          let selector = null;
+          if (this.selector && typeof this.selector !== 'function') {
+            selector = eval(this.selector);
+          }
+          if (observable) {
+            if (selector) {
+              return observable.zip(...obs, selector);
+            } else {
+              return observable.zip(...obs);    
+            }
+          }
+          else {
+            if (selector) {
+              return Rx.Observable.zip(...obs, selector);
+            } else {
+              return Rx.Observable.zip(...obs);
+            }
+          }
+        }        
+      }
+    }
+    Polymer(Zip);
+  })();
+  </script>
+</dom-module>
+
