@@ -30,14 +30,20 @@
             url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${value}&callback=JSONPCallback">
           </helium-rxjs-dom-jsonp-request>
         </helium-rxjs-flat-map-latest>
-        <helium-rxjs-map selector="(data) => data.response[2]"></helium-rxjs-map>      
+        <helium-rxjs-map selector="(data) => { return {words: data.response[1], descriptions: data.response[2], urls: data.response[3]}; }"></helium-rxjs-map>
       </helium-rxjs-observable>
       </br>
       </br>
-      <template is="dom-repeat" items="{{results}}" as="result">
-        <div>{{result}}}</div>
+      <template is="dom-repeat" items="{{results.descriptions}}" as="result">
+        <div>{{result}}</div>
         </br>
       </template>
+      
+      <helium-rxjs-observable>
+        <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
+        <helium-rxjs-map selector="(x) => Rx.Observable.range(x,3)"></helium-rxjs-map>
+        <helium-rxjs-concat-all></helium-rxjs-concat-all>
+      </helium-rxjs-observable>
     </template>
         
     <script>
@@ -49,7 +55,7 @@
       }
       
       app.onError = (e) => {
-        console.log(e.detail);
+        //console.log(e.detail);
       }
       
       app.onCompleted = () => {

@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-range></helium-rxjs-range>
+
+Example:
+
+    <helium-rxjs-range>
+    </helium-rxjs-range>
+-->
+
+<dom-module id="helium-rxjs-range">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class Range {
+      beforeRegister() {
+        this.is = 'helium-rxjs-range';
+
+        this.properties = {
+          start: {
+            type: Number,
+            value: undefined
+          },
+          count: {
+            type: Number,
+            value: undefined
+          }
+        };
+      }
+      
+      _create(observable) {
+        return Rx.Observable.range(this.start, this.count);
+      }
+    }
+    Polymer(Range);
+  })();
+  </script>
+</dom-module>

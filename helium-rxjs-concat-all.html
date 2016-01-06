@@ -1,0 +1,37 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-concat-all></helium-rxjs-concat-all>
+
+Example:
+
+    <helium-rxjs-concat-all>
+    </helium-rxjs-concat-all>
+-->
+
+<dom-module id="helium-rxjs-concat-all">
+
+  <script>
+  (function() {
+    'use strict';
+
+    class ConcatAll {
+      beforeRegister() {
+        this.is = 'helium-rxjs-concat-all';
+
+        this.properties = {
+        };
+      }
+      
+      _create(observable) {
+        return observable.concatAll();
+      }
+    }
+    Polymer(ConcatAll);
+  })();
+  </script>
+</dom-module>
