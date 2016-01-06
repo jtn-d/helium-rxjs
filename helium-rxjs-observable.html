@@ -50,6 +50,11 @@ Example:
             notify: true
           },
           
+          auto: {
+            type: Boolean,
+            value: false
+          },          
+          
           lastData: {
             type: Object,
             value: null,
@@ -72,6 +77,14 @@ Example:
             this.observable = op._create(this.observable);
           });
 
+          if (this.auto) {
+            this.subscribe()           
+          }
+        });
+      }
+      
+      subscribe() {
+        if (this.observable) {
           this.subscription = this.observable.subscribe(
             data => {
               this.lastData = data;
@@ -84,8 +97,8 @@ Example:
             () => {
               this.fire('completed', {});            
             }
-          );
-        });
+          );            
+        }
       }
     }
     Polymer(HeliumRxJSObservable);

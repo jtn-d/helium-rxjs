@@ -12,7 +12,7 @@
     <template is="dom-bind" id="app" >
       <p>An example of <code>&lt;helium-rxjs-observable&gt;</code>:</p>
 
-      <helium-rxjs-observable
+      <helium-rxjs-observable auto
         subscription="{{subscription}}"
         last-data="{{results}}"
         on-next="onNext"
@@ -39,15 +39,21 @@
         </br>
       </template>
       
-      <helium-rxjs-observable>
+      <button onclick="app.$.obs.subscribe()">Subscribe</button>
+      <helium-rxjs-observable id="obs">
         <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
         <helium-rxjs-map selector="(x) => Rx.Observable.range(x,3)"></helium-rxjs-map>
         <helium-rxjs-concat-all></helium-rxjs-concat-all>
+        <helium-rxjs-console-log></helium-rxjs-console-log>
       </helium-rxjs-observable>
     </template>
         
     <script>
       var app = document.querySelector('#app');
+      
+      app.subscribe = (e) => {
+        app.$.obs.subscribe();
+      }
       
       app.onNext = (e) => {
         console.log(e.detail.data);
