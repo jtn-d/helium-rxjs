@@ -66,9 +66,9 @@
       
       <div>
         <helium-rxjs-observable auto>
-          <helium-rxjs-zip>
-            <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
-            <helium-rxjs-range start="0" count="3"></helium-rxjs-range>
+          <helium-rxjs-zip selector="(r1,r2) => {return {octocat: r1.response, octokit: r2.response};}">
+            <helium-rxjs-dom-ajax url="https://api.github.com/users/octocat/repos"></helium-rxjs-dom-ajax>
+            <helium-rxjs-dom-ajax url="https://api.github.com/users/octokit/repos"></helium-rxjs-dom-ajax>            
           </helium-rxjs-zip>
           <helium-rxjs-console-log></helium-rxjs-console-log>
         </helium-rxjs-observable>

@@ -43,25 +43,30 @@ Example:
           obs.push(child._create());
         });
 
-        if (obs.length > 0) {
+        if (obs.length > 1) {
+
           let selector = null;
           if (this.selector && typeof this.selector !== 'function') {
             selector = eval(this.selector);
+          } else {
+            selector = this.selector;
           }
           if (observable) {
             if (selector) {
               return observable.zip(...obs, selector);
-            } else {
+            } else {              
               return observable.zip(...obs);    
             }
           }
-          else {
+          else {            
             if (selector) {
               return Rx.Observable.zip(...obs, selector);
             } else {
               return Rx.Observable.zip(...obs);
             }
           }
+        } else {
+          console.warn('helium-rxjs-zip should have at least two children');
         }        
       }
     }
