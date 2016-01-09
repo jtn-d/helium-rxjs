@@ -29,7 +29,7 @@ Example:
         this.is = 'helium-rxjs-zip';
 
         this.properties = {
-          selector: {
+          resultSelector: {
             type: Object,
             value: null
           }
@@ -45,22 +45,22 @@ Example:
 
         if (obs.length > 1) {
 
-          let selector = null;
-          if (this.selector && typeof this.selector !== 'function') {
-            selector = eval(this.selector);
+          let resultSelector = null;
+          if (this.resultSelector && typeof this.resultSelector !== 'function') {
+            resultSelector = eval(this.resultSelector);
           } else {
-            selector = this.selector;
+            resultSelector = this.resultSelector;
           }
           if (observable) {
-            if (selector) {
-              return observable.zip(...obs, selector);
+            if (resultSelector) {
+              return observable.zip(...obs, resultSelector);
             } else {              
               return observable.zip(...obs);    
             }
           }
           else {            
-            if (selector) {
-              return Rx.Observable.zip(...obs, selector);
+            if (resultSelector) {
+              return Rx.Observable.zip(...obs, resultSelector);
             } else {
               return Rx.Observable.zip(...obs);
             }
