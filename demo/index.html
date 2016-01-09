@@ -47,7 +47,7 @@
         <helium-rxjs-observable auto 
           last-data="{{results}}">
           <helium-rxjs-from-event event-name="click">
-            <button>Click</button>
+            <button>Send jsonp</button>
           </helium-rxjs-from-event>
           <helium-rxjs-flat-map-latest>
             <helium-rxjs-dom-jsonp-request 
@@ -66,7 +66,10 @@
       
       <div>
         <helium-rxjs-observable auto>
-          <helium-rxjs-zip result-selector="(r1,r2) => {return {octocat: r1.response, octokit: r2.response};}">
+          <helium-rxjs-from-event event-name="click">
+            <button>Zip ajaxs</button>
+          </helium-rxjs-from-event>
+          <helium-rxjs-zip result-selector="(e,r1,r2) => {return {octocat: r1.response, octokit: r2.response};}">
             <helium-rxjs-dom-ajax url="https://api.github.com/users/octocat/repos"></helium-rxjs-dom-ajax>
             <helium-rxjs-dom-ajax url="https://api.github.com/users/octokit/repos"></helium-rxjs-dom-ajax>            
           </helium-rxjs-zip>
