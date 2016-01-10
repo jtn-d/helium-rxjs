@@ -36,9 +36,38 @@ gulp.task('watch', function() {
   });
 });
 
-gulp.task('default', function() {
-   runSequence('clean', 'copy', 'link', 'js', function() {
-  return gulp.src(['.tmp/**/*.*', '!.tmp/test/**/*.*'])
+gulp.task('bower-scripts', function() {
+  return gulp.src('.tmp/helium-rxjs-import.html')
+    .pipe($.replace('<script src="../', '<script src="bower_components/'))
+    .pipe(gulp.dest('.tmp'));
+});
+
+gulp.task('bower-imports', function() {
+  return gulp.src('.tmp/helium-rxjs-*.html')
+    .pipe($.replace('<link rel="import" href="../', '<link rel="import" href="bower_components/'))
+    .pipe(gulp.dest('.tmp'));
+});
+
+gulp.task('copy:dist', function() {
+  return gulp.src(['.tmp/bower.json','.tmp/index.html', '.tmp/demo/**/*'], {base: '.tmp'})
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('vulcanize', function() {
+  return gulp.src(['.tmp/helium-rxjs.html'])
+    .pipe($.vulcanize({
+      abspath: '',
+      excludes: [],
+      stripExcludes: false,
+      inlineScripts: true      
+    }))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('default', function() {
+  runSequence(
+    'clean', 'copy', 'link', 'js', 
+    'bower-scripts', 'bower-imports', 
+    'vulcanize', 'copy:dist', function() {
   });
 });
