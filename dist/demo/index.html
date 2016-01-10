@@ -1,34 +1,26 @@
-<!doctype html>
-<html>
-  <head>
+<!DOCTYPE html><html><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>helium-rxjs Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="../helium-rxjs.html">
   </head>
-  <body unresolved>
+  <body unresolved="">
 
-    <template is="dom-bind" id="app" >
+    <template is="dom-bind" id="app">
       <p>An example of <code>&lt;helium-rxjs-observable&gt;</code>:</p>
 
       <div>
-        <helium-rxjs-observable auto
-          disposable="{{disposable}}"
-          last-data="{{results}}"
-          on-next="onNext"
-          on-error="onError" 
-          on-completed="onCompleted">
+        <helium-rxjs-observable auto="" disposable="{{disposable}}" last-data="{{results}}" on-next="onNext" on-error="onError" on-completed="onCompleted">
           <helium-rxjs-from-event event-name="keyup">
-            <input type="text" placeholder="search" autofocus/>
+            <input type="text" placeholder="search" autofocus="">
           </helium-rxjs-from-event>
           <helium-rxjs-map selector="(function(e) {return e.target.value;})"></helium-rxjs-map>
           <helium-rxjs-filter predicate="(value) => value.length > 2"></helium-rxjs-filter>
           <helium-rxjs-debounce due-time="500"></helium-rxjs-debounce>
           <helium-rxjs-distinct-until-changed></helium-rxjs-distinct-until-changed>
           <helium-rxjs-flat-map-latest selector="{{search}}">
-            <helium-rxjs-dom-jsonp-request 
-              url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${value}&callback=JSONPCallback">
+            <helium-rxjs-dom-jsonp-request url="https://en.wikipedia.org/w/api.php?action=opensearch&amp;format=json&amp;search=${value}&amp;callback=JSONPCallback">
             </helium-rxjs-dom-jsonp-request>
           </helium-rxjs-flat-map-latest>
           <helium-rxjs-map selector="(data) => { return {words: data.response[1], descriptions: data.response[2], urls: data.response[3]}; }"></helium-rxjs-map>
@@ -46,14 +38,12 @@
       </div>
             
       <div>
-        <helium-rxjs-observable auto 
-          last-data="{{results}}">
+        <helium-rxjs-observable auto="" last-data="{{results}}">
           <helium-rxjs-from-event event-name="click">
             <button>Send jsonp</button>
           </helium-rxjs-from-event>
           <helium-rxjs-flat-map-latest>
-            <helium-rxjs-dom-jsonp-request 
-              url="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=cat&callback=JSONPCallback">
+            <helium-rxjs-dom-jsonp-request url="https://en.wikipedia.org/w/api.php?action=opensearch&amp;format=json&amp;search=cat&amp;callback=JSONPCallback">
             </helium-rxjs-dom-jsonp-request>
           </helium-rxjs-flat-map-latest>
           <helium-rxjs-map selector="(data) => { return {descriptions: data.response[2]}; }"></helium-rxjs-map>
@@ -63,11 +53,11 @@
       
       <template is="dom-repeat" items="{{results.descriptions}}" as="result">
         <div>{{result}}</div>
-        </br>
+        <br>
       </template>
       
       <div>
-        <helium-rxjs-observable auto>
+        <helium-rxjs-observable auto="">
           <helium-rxjs-from-event event-name="click">
             <button>Zip ajaxs</button>
           </helium-rxjs-from-event>
@@ -80,7 +70,7 @@
       </div>
       
       <div>
-        <helium-rxjs-observable auto>
+        <helium-rxjs-observable auto="">
           <helium-rxjs-from-event event-name="click">
             <button>Chain ajaxs</button>
           </helium-rxjs-from-event>
@@ -97,31 +87,4 @@
       </div>
     </template>
         
-    <script>
-      var app = document.querySelector('#app');
-      
-      app.subscribe = (e) => {
-        app.$.obs.subscribe();
-      }
-      
-      app.onNext = (e) => {
-        console.log(e.detail.data);
-        //app.disposable.dispose();
-      }
-      
-      app.onError = (e) => {
-        console.log(e.detail);
-      }
-      
-      app.onCompleted = () => {
-        console.log('onCompleted');
-      }
-      
-      app.search = (query) => {
-        let url = `https://api.github.com/users/octocat/repos`;
-        return Rx.DOM.ajax({url, responseType: 'json'});
-      }
-    </script>
-
-  </body>
-</html>
+    <script src="index.js"></script></body></html>

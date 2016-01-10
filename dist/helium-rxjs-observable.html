@@ -1,0 +1,28 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="helium-rxjs-import.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <helium-rxjs-observable></helium-rxjs-observable>
+
+Example:
+
+    <helium-rxjs-observable>
+    </helium-rxjs-observable>
+-->
+
+</head><body><dom-module id="helium-rxjs-observable">
+  <template>
+    <content id="operators" select="helium-rxjs-from-event,helium-rxjs-debounce,
+                     helium-rxjs-distinct-until-changed,helium-rxjs-map,
+                     helium-rxjs-flat-map,helium-rxjs-flat-map-latest,
+                     helium-rxjs-concat-all,helium-rxjs-console-log,
+                     helium-rxjs-range,helium-rxjs-zip,helium-rxjs-filter">
+    </content>
+  </template>
+
+  </dom-module>
+<script src="helium-rxjs-observable.js"></script></body></html>

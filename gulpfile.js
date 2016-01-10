@@ -31,10 +31,14 @@ gulp.task('clean', function () {
 });
 
 gulp.task('watch', function() {
-  runSequence('clean', 'copy', 'link', 'js', function(){
+  runSequence('clean', 'copy', 'link', 'js', function() {
     gulp.watch(['*.html', 'demo/*.html'], ['js']);
   });
 });
 
-gulp.task('default', ['clean', 'copy', 'link', 'js'], function() {
+gulp.task('default', function() {
+   runSequence('clean', 'copy', 'link', 'js', function() {
+  return gulp.src(['.tmp/**/*.*', '!.tmp/test/**/*.*'])
+    .pipe(gulp.dest('dist'));
+  });
 });

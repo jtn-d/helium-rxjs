@@ -1,6 +1,6 @@
 {
   "name": "helium-rxjs",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0",
   "description": "Element wrapper for RxJS",
   "keywords": [
     "web-component",
