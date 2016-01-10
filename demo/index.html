@@ -76,6 +76,23 @@
           <helium-rxjs-console-log></helium-rxjs-console-log>
         </helium-rxjs-observable>
       </div>
+      
+      <div>
+        <helium-rxjs-observable auto>
+          <helium-rxjs-from-event event-name="click">
+            <button>Chain ajaxs</button>
+          </helium-rxjs-from-event>
+          <helium-rxjs-flat-map>
+            <helium-rxjs-dom-ajax url="https://api.github.com/users/octocat/repos"></helium-rxjs-dom-ajax>
+          </helium-rxjs-flat-map>
+          <helium-rxjs-map selector="(data) => data.response[1].name"></helium-rxjs-map>
+          <helium-rxjs-flat-map>
+            <helium-rxjs-dom-ajax url="https://api.github.com/repos/octocat/${value}"></helium-rxjs-dom-ajax>
+          </helium-rxjs-flat-map>
+          <helium-rxjs-map selector="(data) => data.response"></helium-rxjs-map>
+          <helium-rxjs-console-log></helium-rxjs-console-log>
+        </helium-rxjs-observable>
+      </div>
     </template>
         
     <script>
@@ -91,7 +108,7 @@
       }
       
       app.onError = (e) => {
-        //console.log(e.detail);
+        console.log(e.detail);
       }
       
       app.onCompleted = () => {

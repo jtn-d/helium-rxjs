@@ -5,15 +5,15 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <helium-rxjs-map></helium-rxjs-map>
+    <helium-rxjs-flat-map></helium-rxjs-flat-map>
 
 Example:
 
-    <helium-rxjs-map>
-    </helium-rxjs-map>
+    <helium-rxjs-flat-map>
+    </helium-rxjs-flat-map>
 -->
 
-<dom-module id="helium-rxjs-map">
+<dom-module id="helium-rxjs-flat-map">
   <template>
     <content select="helium-rxjs-dom-ajax,helium-rxjs-dom-jsonp-request"></content>
   </template>
@@ -22,9 +22,9 @@ Example:
   (function() {
     'use strict';
 
-    class Map {
+    class FlatMap {
       beforeRegister() {
-        this.is = 'helium-rxjs-map';
+        this.is = 'helium-rxjs-flat-map';
 
         this.properties = {
           selector: {
@@ -39,20 +39,20 @@ Example:
         if (children.length === 1) {
           // take first child
           this.selector = children[0]._selector.bind(children[0]);
-          return observable.map(this.selector);
+          return observable.flatMap(this.selector);
         } else if (children.length > 1) {
           console.warn('helium-rxjs-flat-map-latest can have only one child');
         } else {
           // no children
           if (typeof this.selector === 'function') {
-            return observable.map(this.selector);          
+            return observable.flatMap(this.selector);          
           } else {
-            return observable.map(eval(this.selector));          
+            return observable.flatMap(eval(this.selector));          
           } 
         }        
       }
     }
-    Polymer(Map);
+    Polymer(FlatMap);
   })();
   </script>
 </dom-module>
