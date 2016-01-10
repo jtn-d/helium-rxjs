@@ -1,8 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="helium-rxjs-import.html">
-<link rel="import" href="helium-rxjs-from-event.html">
-<link rel="import" href="helium-rxjs-debounce.html">
-<link rel="import" href="helium-rxjs-distinct-until-changed.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -32,18 +29,12 @@ Example:
   (function() {
     'use strict';
 
-    class HeliumRxJSObservable {
+    class Observable {
       beforeRegister() {
         this.is = 'helium-rxjs-observable';
 
         this.properties = {
-          observable: {
-            type: Object,
-            value: null,
-            notify: true
-          },
-          
-          subscription: {
+          disposable: {
             type: Object,
             value: null,
             readonly: true,
@@ -85,7 +76,7 @@ Example:
       
       subscribe() {
         if (this.observable) {
-          this.subscription = this.observable.subscribe(
+          this.disposable = this.observable.subscribe(
             data => {
               this.lastData = data;
               this.fire('next', {data});
@@ -97,11 +88,13 @@ Example:
             () => {
               this.fire('completed', {});            
             }
-          );            
+          );
+          return this.disposable;
         }
+        return null;
       }
     }
-    Polymer(HeliumRxJSObservable);
+    Polymer(Observable);
   })();
   </script>
 </dom-module>

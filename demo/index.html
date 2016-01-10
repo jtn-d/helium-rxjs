@@ -13,7 +13,7 @@
       <p>An example of <code>&lt;helium-rxjs-observable&gt;</code>:</p>
 
     <helium-rxjs-observable auto
-        subscription="{{subscription}}"
+        disposable="{{disposable}}"
         last-data="{{results}}"
         on-next="onNext"
         on-error="onError" 
@@ -104,7 +104,7 @@
       
       app.onNext = (e) => {
         console.log(e.detail.data);
-        //app.subscription.dispose();
+        //app.disposable.dispose();
       }
       
       app.onError = (e) => {

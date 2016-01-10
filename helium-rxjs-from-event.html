@@ -22,7 +22,7 @@ Example:
   (function() {
     'use strict';
 
-    class HeliumRxJSFromEvent {
+    class FromEvent {
       beforeRegister() {
         this.is = 'helium-rxjs-from-event';
 
@@ -54,7 +54,7 @@ Example:
         return Rx.Observable.fromEvent(this.element, this.eventName);
       }
     }
-    Polymer(HeliumRxJSFromEvent);
+    Polymer(FromEvent);
   })();
   </script>
 </dom-module>
