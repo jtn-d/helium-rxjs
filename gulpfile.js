@@ -38,19 +38,14 @@ gulp.task('watch', function() {
 
 gulp.task('bower-scripts', function() {
   return gulp.src('.tmp/helium-rxjs-import.html')
-    .pipe($.replace('<script src="../', '<script src="bower_components/'))
+    .pipe($.replace('<script src="../', '<script src="../../'))
     .pipe(gulp.dest('.tmp'));
 });
 
 gulp.task('bower-imports', function() {
-  return gulp.src('.tmp/helium-rxjs-*.html')
-    .pipe($.replace('<link rel="import" href="../', '<link rel="import" href="bower_components/'))
+  return gulp.src('.tmp/helium-rxjs-import.html')
+    .pipe($.replace('<link rel="import" href="../', '<link rel="import" href="../../'))
     .pipe(gulp.dest('.tmp'));
-});
-
-gulp.task('copy:dist', function() {
-  return gulp.src(['.tmp/bower.json','.tmp/index.html', '.tmp/demo/**/*'], {base: '.tmp'})
-    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('vulcanize', function() {
@@ -77,6 +72,7 @@ gulp.task('vulcanize', function() {
 gulp.task('default', function() {
   runSequence(
     'clean', 'copy', 'link', 'js', 
-    'vulcanize', 'copy:dist', function() {
+    'bower-scripts', 'bower-imports',
+    'vulcanize', function() {
   });
 });
