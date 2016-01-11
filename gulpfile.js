@@ -57,6 +57,7 @@ gulp.task('vulcanize', function() {
   return gulp.src(['.tmp/helium-rxjs.html'])
     .pipe($.vulcanize({
       abspath: '',
+      stripComments: true,
       excludes: [
         '../rxjs/dist/rx.all.js',
         '../rxjs-dom/dist/rx.dom.js',
