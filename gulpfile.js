@@ -57,7 +57,16 @@ gulp.task('vulcanize', function() {
   return gulp.src(['.tmp/helium-rxjs.html'])
     .pipe($.vulcanize({
       abspath: '',
-      excludes: [],
+      excludes: [
+        '../rxjs/dist/rx.all.js',
+        '../rxjs-dom/dist/rx.dom.js',
+        '../polymer/polymer.html'
+      ],
+      redirects: [
+        '../polymer/polymer.html|bower_components/polymer/polymer.html',
+        '../polymer/polymer-mini.html|bower_components/polymer/polymer-mini.html',
+        '../polymer/polymer-micro.html|bower_components/polymer/polymer-micro.html'        
+      ],
       stripExcludes: false,
       inlineScripts: true      
     }))
@@ -67,7 +76,6 @@ gulp.task('vulcanize', function() {
 gulp.task('default', function() {
   runSequence(
     'clean', 'copy', 'link', 'js', 
-    'bower-scripts', 'bower-imports', 
     'vulcanize', 'copy:dist', function() {
   });
 });
